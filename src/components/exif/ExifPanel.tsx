@@ -1,50 +1,54 @@
+"use client";
+
 import { formatAperture, formatFocalLength } from "@/lib/utils/photo";
 import type { PhotoWithExif } from "@/types";
 import { Camera, Aperture, Timer, Zap, Focus, CalendarDays } from "lucide-react";
+import { useLang } from "@/i18n/LangContext";
 
 interface ExifPanelProps {
   exif: PhotoWithExif["exif"];
 }
 
 export function ExifPanel({ exif }: ExifPanelProps) {
+  const { t } = useLang();
   if (!exif) return null;
 
   const items = [
     {
       icon: <Camera className="h-4 w-4" />,
-      label: "Aparat",
+      label: t.exif.camera,
       value: [exif.cameraMake, exif.cameraModel].filter(Boolean).join(" ") || null,
     },
     {
       icon: <Focus className="h-4 w-4" />,
-      label: "Obiektyw",
+      label: t.exif.lens,
       value: exif.lens ?? null,
     },
     {
       icon: <Focus className="h-4 w-4" />,
-      label: "Ogniskowa",
+      label: t.exif.focalLength,
       value: formatFocalLength(exif.focalLength),
     },
     {
       icon: <Aperture className="h-4 w-4" />,
-      label: "Przysłona",
+      label: t.exif.aperture,
       value: formatAperture(exif.aperture),
     },
     {
       icon: <Timer className="h-4 w-4" />,
-      label: "Czas naświetlania",
+      label: t.exif.shutterSpeed,
       value: exif.exposureTime ?? null,
     },
     {
       icon: <Zap className="h-4 w-4" />,
-      label: "ISO",
+      label: t.exif.iso,
       value: exif.iso ? `ISO ${exif.iso}` : null,
     },
     {
       icon: <CalendarDays className="h-4 w-4" />,
-      label: "Data",
+      label: t.exif.date,
       value: exif.takenAt
-        ? new Date(exif.takenAt).toLocaleDateString("pl-PL", {
+        ? new Date(exif.takenAt).toLocaleDateString(t.exif.dateLocale, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -58,7 +62,7 @@ export function ExifPanel({ exif }: ExifPanelProps) {
   return (
     <div className="rounded-lg border bg-card p-4">
       <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-        Dane EXIF
+        {t.exif.title}
       </h3>
       <ul className="space-y-2">
         {items.map((item) => (

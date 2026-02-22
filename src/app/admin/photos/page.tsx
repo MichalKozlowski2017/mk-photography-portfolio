@@ -48,6 +48,7 @@ export default async function AdminPhotosPage() {
                         src={photo.thumbnailUrl}
                         alt={photo.title ?? ""}
                         fill
+                        sizes="64px"
                         className="object-cover"
                       />
                     </div>

@@ -8,9 +8,10 @@ export default async function AdminDashboard() {
   const session = await auth();
   if (!session) redirect("/admin/login");
 
-  const [photoCount, categoryCount] = await Promise.all([
+  const [photoCount, categoryCount, pendingCommentCount] = await Promise.all([
     prisma.photo.count(),
     prisma.category.count(),
+    prisma.comment.count({ where: { approved: false } }),
   ]);
 
   return (
@@ -29,7 +30,7 @@ export default async function AdminDashboard() {
         </form>
       </div>
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-2">
+      <div className="mb-8 grid gap-4 sm:grid-cols-3">
         <div className="rounded-lg border p-6">
           <p className="text-sm text-muted-foreground">Zdjęcia</p>
           <p className="mt-1 text-3xl font-bold">{photoCount}</p>
@@ -38,9 +39,13 @@ export default async function AdminDashboard() {
           <p className="text-sm text-muted-foreground">Kategorie</p>
           <p className="mt-1 text-3xl font-bold">{categoryCount}</p>
         </div>
+        <div className="rounded-lg border p-6">
+          <p className="text-sm text-muted-foreground">Komentarze (oczekujące)</p>
+          <p className="mt-1 text-3xl font-bold">{pendingCommentCount}</p>
+        </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         <Link
           href="/admin/photos/new"
           className="rounded-lg bg-foreground px-5 py-2.5 text-sm font-medium text-background"
@@ -49,6 +54,14 @@ export default async function AdminDashboard() {
         </Link>
         <Link href="/admin/photos" className="rounded-lg border px-5 py-2.5 text-sm font-medium">
           Wszystkie zdjęcia
+        </Link>
+        <Link href="/admin/comments" className="rounded-lg border px-5 py-2.5 text-sm font-medium">
+          Moderacja komentarzy
+          {pendingCommentCount > 0 && (
+            <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-foreground text-[11px] font-bold text-background">
+              {pendingCommentCount}
+            </span>
+          )}
         </Link>
       </div>
     </div>

@@ -1,0 +1,194 @@
+export type Locale = "en" | "pl";
+export const defaultLocale: Locale = "en";
+export const locales: Locale[] = ["en", "pl"];
+
+const t = {
+  en: {
+    nav: {
+      home: "Home",
+      gallery: "Gallery",
+      about: "About",
+    },
+    hero: {
+      subtitle: "Photography Portfolio",
+      tagline: "Capture the Moment",
+      cta: "View Portfolio",
+      slideLabel: (n: number) => `Slide ${n}`,
+    },
+    home: {
+      latestWork: "Latest Work",
+    },
+    gallery: {
+      title: "Gallery",
+      all: "All",
+    },
+    photo: {
+      back: "← Gallery",
+      alt: "Photo",
+    },
+    photoGrid: {
+      empty: "No photos to display.",
+    },
+    exif: {
+      title: "EXIF Data",
+      camera: "Camera",
+      lens: "Lens",
+      focalLength: "Focal Length",
+      aperture: "Aperture",
+      shutterSpeed: "Shutter Speed",
+      iso: "ISO",
+      date: "Date",
+      dateLocale: "en-GB",
+    },
+    footer: {
+      tagline: "Capture the Moment",
+      rights: "All rights reserved.",
+    },
+    about: {
+      label: "About",
+      role: "Photographer",
+      intro:
+        "Hello — my name is Michał. I am a photographer from Warsaw, fascinated by the beauty of everyday moments hidden in landscapes, architecture, and human faces.",
+      p1: "I have been passionate about photography for over a decade. It all started with a simple compact camera and walks around the Old Town — today the whole world is my studio. I head out at dawn to catch the first light; I stay until dusk when the city changes its face.",
+      p2: "I specialise in landscape, street, and portrait photography. What interests me most is the moment when technique steps aside and a photograph simply",
+      p2em: "feels real",
+      p3: "Every image in this portfolio was taken during my travels and daily walks — no studio, no artificial light. Just a camera, a lens, and a moment.",
+      contact: "Contact",
+      stats: [
+        { label: "Years of experience", value: "10+" },
+        { label: "Photos in archive", value: "12,000+" },
+        { label: "Countries visited", value: "18" },
+        { label: "Equipment", value: "Nikon Z-series" },
+      ],
+    },
+    meta: {
+      homeTitle: "MK Photography",
+      homeDesc: "Photography portfolio",
+      galleryTitle: "Gallery — MK Photography",
+      aboutTitle: "About — MK Photography",
+      aboutDesc: "Photographer with a passion for capturing moments.",
+    },
+    theme: {
+      toDark: "Switch to dark mode",
+      toLight: "Switch to light mode",
+    },
+    lang: {
+      switch: "PL",
+      current: "EN",
+    },
+    comments: {
+      title: "Comments",
+      empty: "No comments yet. Be the first!",
+      form: {
+        namePlaceholder: "Your name",
+        contentPlaceholder: "Write a comment…",
+        submit: "Post comment",
+        pending: "Your comment has been submitted and is awaiting moderation. Thank you!",
+        error: "Something went wrong. Please try again.",
+      },
+    },
+    rating: {
+      title: "Rating",
+      rate: "Rate",
+      yours: "Your rating",
+      noRatings: "No ratings yet",
+      count: (n: number) => (n === 1 ? "1 rating" : `${n} ratings`),
+    },
+  },
+
+  pl: {
+    nav: {
+      home: "Strona główna",
+      gallery: "Galeria",
+      about: "O mnie",
+    },
+    hero: {
+      subtitle: "Portfolio Fotograficzne",
+      tagline: "Uwieczniam Chwile",
+      cta: "Zobacz Portfolio",
+      slideLabel: (n: number) => `Zdjęcie ${n}`,
+    },
+    home: {
+      latestWork: "Najnowsze Prace",
+    },
+    gallery: {
+      title: "Galeria",
+      all: "Wszystkie",
+    },
+    photo: {
+      back: "← Galeria",
+      alt: "Zdjęcie",
+    },
+    photoGrid: {
+      empty: "Brak zdjęć do wyświetlenia.",
+    },
+    exif: {
+      title: "Dane EXIF",
+      camera: "Aparat",
+      lens: "Obiektyw",
+      focalLength: "Ogniskowa",
+      aperture: "Przysłona",
+      shutterSpeed: "Czas naświetlania",
+      iso: "ISO",
+      date: "Data",
+      dateLocale: "pl-PL",
+    },
+    footer: {
+      tagline: "Uwieczniam Chwile",
+      rights: "Wszelkie prawa zastrzeżone.",
+    },
+    about: {
+      label: "O mnie",
+      role: "Fotograf",
+      intro:
+        "Witaj — mam na imię Michał. Jestem fotografem z Warszawy, zafascynowanym pięknem codziennych chwil ukrytych w krajobrazie, architekturze i ludzkich twarzach.",
+      p1: "Fotografią zajmuję się od ponad dekady. Zaczęło się od zwykłego aparatu kompaktowego i spacerów po Starówce — dziś studio zastępuje mi cały świat. Wychodzę o świcie, żeby złapać pierwsze światło; zostaję do zmierzchu, kiedy miasto zmienia swoje oblicze.",
+      p2: "Specjalizuję się w fotografii krajobrazowej, ulicznej i portretowej. Interesuje mnie moment, gdy technika schodzi na drugi plan, a zdjęcie po prostu",
+      p2em: "czuje się prawdziwe",
+      p3: "Wszystkie zdjęcia w tym portfolio powstały podczas moich podróży i codziennych spacerów — bez studia, bez sztucznego światła. Tylko aparat, obiektyw i chwila.",
+      contact: "Kontakt",
+      stats: [
+        { label: "Lat doświadczenia", value: "10+" },
+        { label: "Zdjęć w archiwum", value: "12 000+" },
+        { label: "Odwiedzone kraje", value: "18" },
+        { label: "Sprzęt", value: "Nikon Z-series" },
+      ],
+    },
+    meta: {
+      homeTitle: "MK Photography",
+      homeDesc: "Portfolio fotograficzne",
+      galleryTitle: "Galeria — MK Photography",
+      aboutTitle: "O mnie — MK Photography",
+      aboutDesc: "Fotograf z pasją do uwieczniania chwil.",
+    },
+    theme: {
+      toDark: "Włącz ciemny motyw",
+      toLight: "Włącz jasny motyw",
+    },
+    lang: {
+      switch: "EN",
+      current: "PL",
+    },
+    comments: {
+      title: "Komentarze",
+      empty: "Brak komentarzy. Bądź pierwszy!",
+      form: {
+        namePlaceholder: "Twoje imię",
+        contentPlaceholder: "Napisz komentarz…",
+        submit: "Dodaj komentarz",
+        pending: "Twój komentarz został dodany i oczekuje na moderację. Dziękujemy!",
+        error: "Coś poszło nie tak. Spróbuj ponownie.",
+      },
+    },
+    rating: {
+      title: "Ocena",
+      rate: "Ocena",
+      yours: "Twoja ocena",
+      noRatings: "Brak ocen",
+      count: (n: number) => (n === 1 ? "1 ocena" : n < 5 ? `${n} oceny` : `${n} ocen`),
+    },
+  },
+};
+
+export type Translations = (typeof t)["en"];
+export const translations = t;

@@ -1,13 +1,17 @@
+"use client";
+
 import { PhotoCard } from "./PhotoCard";
 import type { PhotoWithExif } from "@/types";
+import { useLang } from "@/i18n/LangContext";
 
 interface PhotoGridProps {
   photos: PhotoWithExif[];
 }
 
 export function PhotoGrid({ photos }: PhotoGridProps) {
+  const { t } = useLang();
   if (photos.length === 0) {
-    return <p className="py-16 text-center text-muted-foreground">Brak zdjęć do wyświetlenia.</p>;
+    return <p className="py-16 text-center text-muted-foreground">{t.photoGrid.empty}</p>;
   }
 
   return (

@@ -1,33 +1,62 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { PhotoGrid } from "@/components/gallery/PhotoGrid";
+import { getT } from "@/i18n/server";
 import type { PhotoWithExif } from "@/types";
 
-export default async function GalleryPage() {
-  const photos = await prisma.photo.findMany({
-    where: { published: true },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-    include: { exif: true, category: true },
-  });
+interface Props {
+  searchParams: Promise<{ category?: string }>;
+}
 
-  const categories = await prisma.category.findMany({
-    where: { photos: { some: { published: true } } },
-    orderBy: { name: "asc" },
-  });
+export default async function GalleryPage({ searchParams }: Props) {
+  const { category } = await searchParams;
+
+  const [photos, categories, t] = await Promise.all([
+    prisma.photo.findMany({
+      where: {
+        published: true,
+        ...(category ? { category: { slug: category } } : {}),
+      },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+      include: { exif: true, category: true },
+    }),
+    prisma.category.findMany({
+      where: { photos: { some: { published: true } } },
+      orderBy: { name: "asc" },
+    }),
+    getT(),
+  ]);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-16">
-      <h1 className="mb-8 text-3xl font-bold">Galeria</h1>
+    <main className="mx-auto max-w-6xl px-4 pb-24 pt-32">
+      <h1 className="mb-10 text-center font-playfair text-4xl tracking-[0.15em] text-white">
+        {t.gallery.title}
+      </h1>
 
       {categories.length > 0 && (
-        <div className="mb-8 flex flex-wrap gap-2">
-          <span className="rounded-full border px-4 py-1.5 text-sm font-medium">Wszystkie</span>
+        <div className="mb-10 flex flex-wrap justify-center gap-3">
+          <Link
+            href="/gallery"
+            className={`border px-5 py-1.5 text-[11px] tracking-[0.2em] uppercase transition-colors ${
+              !category
+                ? "border-white bg-white text-black"
+                : "border-white/20 text-white/50 hover:border-white/60 hover:text-white"
+            }`}
+          >
+            {t.gallery.all}
+          </Link>
           {categories.map((cat) => (
-            <span
+            <Link
               key={cat.id}
-              className="rounded-full border px-4 py-1.5 text-sm text-muted-foreground"
+              href={`/gallery?category=${cat.slug}`}
+              className={`border px-5 py-1.5 text-[11px] tracking-[0.2em] uppercase transition-colors ${
+                category === cat.slug
+                  ? "border-white bg-white text-black"
+                  : "border-white/20 text-white/50 hover:border-white/60 hover:text-white"
+              }`}
             >
               {cat.name}
-            </span>
+            </Link>
           ))}
         </div>
       )}

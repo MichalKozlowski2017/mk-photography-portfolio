@@ -1,45 +1,33 @@
-import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { HeroSlider } from "@/components/hero/HeroSlider";
 import { PhotoGrid } from "@/components/gallery/PhotoGrid";
+import { getT } from "@/i18n/server";
 import type { PhotoWithExif } from "@/types";
 
 export default async function Home() {
-  const featured = await prisma.photo.findMany({
-    where: { published: true, featured: true },
-    orderBy: { sortOrder: "asc" },
-    take: 6,
-    include: { exif: true, category: true },
-  });
+  const [photos, t] = await Promise.all([
+    prisma.photo.findMany({
+      where: { published: true },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+      include: { exif: true, category: true },
+    }),
+    getT(),
+  ]);
+
+  const heroPhotos = photos.slice(0, 5).map((p) => ({ url: p.url, title: p.title }));
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-16">
-      <section className="mb-16 text-center">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">MK Photography</h1>
-        <p className="mt-4 text-lg text-muted-foreground">Portfolio fotograficzne</p>
-        <Link
-          href="/gallery"
-          className="mt-8 inline-block rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background"
-        >
-          Zobacz galerię
-        </Link>
-      </section>
+    <>
+      <HeroSlider photos={heroPhotos} />
 
-      {featured.length > 0 ? (
-        <section>
-          <h2 className="mb-6 text-2xl font-semibold">Wyróżnione zdjęcia</h2>
-          <PhotoGrid photos={featured as PhotoWithExif[]} />
-        </section>
-      ) : (
-        <section className="rounded-xl border border-dashed py-24 text-center">
-          <p className="text-muted-foreground">
-            Galeria jest pusta. Dodaj pierwsze zdjęcia w{" "}
-            <Link href="/admin" className="underline">
-              panelu admina
-            </Link>
-            .
-          </p>
+      {photos.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-24">
+          <h2 className="mb-12 text-center font-playfair text-3xl tracking-[0.15em] text-white">
+            {t.home.latestWork}
+          </h2>
+          <PhotoGrid photos={photos as PhotoWithExif[]} />
         </section>
       )}
-    </main>
+    </>
   );
 }

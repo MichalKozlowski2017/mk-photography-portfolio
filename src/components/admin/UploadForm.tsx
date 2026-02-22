@@ -44,8 +44,14 @@ export function UploadForm({ categories }: Props) {
 
     const res = await fetch("/api/upload", { method: "POST", body: data });
     if (!res.ok) {
-      const json = await res.json();
-      setError(json.error ?? "Błąd przesyłania");
+      let message = "Błąd przesyłania";
+      try {
+        const json = await res.json();
+        message = json.error ?? message;
+      } catch {
+        message = (await res.text().catch(() => "")) || message;
+      }
+      setError(message);
     } else {
       router.push("/admin/photos");
       router.refresh();
@@ -115,7 +121,12 @@ export function UploadForm({ categories }: Props) {
         </select>
       </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && (
+        <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          <span className="font-medium">Błąd: </span>
+          {error}
+        </div>
+      )}
 
       <button
         type="submit"
