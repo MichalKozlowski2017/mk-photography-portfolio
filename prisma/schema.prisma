@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  slug   String  @unique
+  photos Photo[]
+}
+
+model Photo {
+  id           String    @id @default(cuid())
+  title        String?
+  description  String?
+  slug         String    @unique
+  filename     String
+  url          String
+  thumbnailUrl String
+  width        Int
+  height       Int
+  featured     Boolean   @default(false)
+  sortOrder    Int       @default(0)
+  published    Boolean   @default(true)
+  categoryId   String?
+  category     Category? @relation(fields: [categoryId], references: [id])
+  exif         Exif?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Exif {
+  id           String    @id @default(cuid())
+  photoId      String    @unique
+  photo        Photo     @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  cameraMake   String?
+  cameraModel  String?
+  lens         String?
+  focalLength  Float?
+  aperture     Float?
+  exposureTime String?
+  iso          Int?
+  takenAt      DateTime?
+  latitude     Float?
+  longitude    Float?
+}
