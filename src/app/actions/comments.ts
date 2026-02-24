@@ -33,13 +33,23 @@ export async function submitComment(
 export async function approveComment(id: string) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
-  await prisma.comment.update({ where: { id }, data: { approved: true } });
+  const comment = await prisma.comment.update({
+    where: { id },
+    data: { approved: true },
+    include: { photo: { select: { slug: true } } },
+  });
   revalidatePath("/admin/comments");
+  revalidatePath(`/gallery/${comment.photo.slug}`);
 }
 
 export async function deleteComment(id: string) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
+  const comment = await prisma.comment.findUnique({
+    where: { id },
+    include: { photo: { select: { slug: true } } },
+  });
   await prisma.comment.delete({ where: { id } });
   revalidatePath("/admin/comments");
+  if (comment) revalidatePath(`/gallery/${comment.photo.slug}`);
 }
