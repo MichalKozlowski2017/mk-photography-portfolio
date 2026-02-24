@@ -31,7 +31,7 @@ export function PhotoCard({ photo }: PhotoCardProps) {
         alt={photo.title ?? t.photo.alt}
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        className={`object-cover transition-[transform,opacity] duration-700 ease-out group-hover:scale-105 ${loaded ? "opacity-100" : "opacity-0"}`}
+        className={`object-cover transition duration-700 ease-out group-hover:scale-105 ${loaded ? "opacity-100" : "opacity-0"}`}
         onLoad={() => setLoaded(true)}
       />
       {/* Hover overlay */}
