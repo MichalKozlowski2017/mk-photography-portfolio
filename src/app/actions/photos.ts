@@ -12,12 +12,12 @@ type SortOption = "dateDesc" | "dateAsc" | "uploadDesc" | "ratingDesc";
 function getOrderBy(sort: SortOption) {
   switch (sort) {
     case "dateAsc":
-      return [{ exif: { takenAt: "asc" } }, { createdAt: "asc" }] as const;
+      return [{ exif: { takenAt: "asc" } }, { createdAt: "asc" }];
     case "uploadDesc":
-      return [{ createdAt: "desc" }] as const;
+      return [{ createdAt: "desc" }];
     case "dateDesc":
     default:
-      return [{ exif: { takenAt: "desc" } }, { createdAt: "desc" }] as const;
+      return [{ exif: { takenAt: "desc" } }, { createdAt: "desc" }];
   }
 }
 
