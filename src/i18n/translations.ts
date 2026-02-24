@@ -89,19 +89,11 @@ const t = {
     about: {
       label: "About",
       role: "Photographer",
-      intro:
-        "Hello — my name is Michał. I am a photographer from Warsaw, fascinated by the beauty of everyday moments hidden in landscapes, architecture, and human faces.",
-      p1: "I have been passionate about photography for over a decade. It all started with a simple compact camera and walks around the Old Town — today the whole world is my studio. I head out at dawn to catch the first light; I stay until dusk when the city changes its face.",
-      p2: "I specialise in landscape, street, and portrait photography. What interests me most is the moment when technique steps aside and a photograph simply",
+      intro: "My name is Michał — a photographer from Warsaw.",
+      p1: "For over a decade I have been chasing light: at dawn in the mountains, at dusk on city streets, and everywhere in between.",
+      p2: "I specialise in landscape, street, and portrait photography. What draws me most is the moment when technique steps aside and a photograph simply",
       p2em: "feels real",
       p3: "Every image in this portfolio was taken during my travels and daily walks — no studio, no artificial light. Just a camera, a lens, and a moment.",
-      contact: "Contact",
-      stats: [
-        { label: "Years of experience", value: "10+" },
-        { label: "Photos in archive", value: "12,000+" },
-        { label: "Countries visited", value: "18" },
-        { label: "Equipment", value: "Nikon Z-series" },
-      ],
     },
     meta: {
       homeTitle: "MK Shots",
@@ -224,19 +216,11 @@ const t = {
     about: {
       label: "O mnie",
       role: "Fotograf",
-      intro:
-        "Witaj — mam na imię Michał. Jestem fotografem z Warszawy, zafascynowanym pięknem codziennych chwil ukrytych w krajobrazie, architekturze i ludzkich twarzach.",
-      p1: "Fotografią zajmuję się od ponad dekady. Zaczęło się od zwykłego aparatu kompaktowego i spacerów po Starówce — dziś studio zastępuje mi cały świat. Wychodzę o świcie, żeby złapać pierwsze światło; zostaję do zmierzchu, kiedy miasto zmienia swoje oblicze.",
+      intro: "Mam na imię Michał — jestem fotografem z Warszawy.",
+      p1: "Od ponad dekady szukam światła: o świcie w górach, o zmierzchu na miejskich ulicach i wszędzie pomiędzy.",
       p2: "Specjalizuję się w fotografii krajobrazowej, ulicznej i portretowej. Interesuje mnie moment, gdy technika schodzi na drugi plan, a zdjęcie po prostu",
       p2em: "czuje się prawdziwe",
       p3: "Wszystkie zdjęcia w tym portfolio powstały podczas moich podróży i codziennych spacerów — bez studia, bez sztucznego światła. Tylko aparat, obiektyw i chwila.",
-      contact: "Kontakt",
-      stats: [
-        { label: "Lat doświadczenia", value: "10+" },
-        { label: "Zdjęć w archiwum", value: "12 000+" },
-        { label: "Odwiedzone kraje", value: "18" },
-        { label: "Sprzęt", value: "Nikon Z-series" },
-      ],
     },
     meta: {
       homeTitle: "MK Shots",
