@@ -5,20 +5,19 @@ import { prisma } from "@/lib/prisma";
 import { cloudinary } from "@/lib/cloudinary";
 import { revalidatePath } from "next/cache";
 import type { PhotoWithExif } from "@/types";
-import type { Prisma } from "@/generated/prisma";
 import { GALLERY_PAGE_SIZE } from "@/lib/constants";
 
 type SortOption = "dateDesc" | "dateAsc" | "uploadDesc" | "ratingDesc";
 
-function getOrderBy(sort: SortOption): Prisma.PhotoOrderByWithRelationInput[] {
+function getOrderBy(sort: SortOption) {
   switch (sort) {
     case "dateAsc":
-      return [{ exif: { takenAt: "asc" } }, { createdAt: "asc" }];
+      return [{ exif: { takenAt: "asc" as const } }, { createdAt: "asc" as const }];
     case "uploadDesc":
-      return [{ createdAt: "desc" }];
+      return [{ createdAt: "desc" as const }];
     case "dateDesc":
     default:
-      return [{ exif: { takenAt: "desc" } }, { createdAt: "desc" }];
+      return [{ exif: { takenAt: "desc" as const } }, { createdAt: "desc" as const }];
   }
 }
 
