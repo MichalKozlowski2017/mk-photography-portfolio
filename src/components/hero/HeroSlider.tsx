@@ -58,7 +58,7 @@ export function HeroSlider({ photos }: Props) {
           Michał Kozłowski
           <br />
           <span className="text-3xl font-normal tracking-[0.35em] sm:text-4xl lg:text-5xl">
-            Photography
+            Shots
           </span>
         </h1>
         <p className="mt-5 text-xs tracking-[0.35em] uppercase text-white/40">{t.hero.tagline}</p>

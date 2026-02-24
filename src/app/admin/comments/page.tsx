@@ -25,9 +25,14 @@ export default async function AdminCommentsPage() {
     <div className="mx-auto max-w-4xl px-4 py-16">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Komentarze</h1>
-        <Link href="/admin" className="text-sm text-muted-foreground hover:text-foreground">
-          ← Panel
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
+            ← Strona główna
+          </Link>
+          <Link href="/admin" className="text-sm text-muted-foreground hover:text-foreground">
+            Panel
+          </Link>
+        </div>
       </div>
 
       {/* Pending */}

@@ -2,7 +2,7 @@
 
 import { formatAperture, formatFocalLength } from "@/lib/utils/photo";
 import type { PhotoWithExif } from "@/types";
-import { Camera, Aperture, Timer, Zap, Focus, CalendarDays } from "lucide-react";
+import { Camera, Aperture, Timer, Zap, Focus } from "lucide-react";
 import { useLang } from "@/i18n/LangContext";
 
 interface ExifPanelProps {
@@ -43,17 +43,6 @@ export function ExifPanel({ exif }: ExifPanelProps) {
       icon: <Zap className="h-4 w-4" />,
       label: t.exif.iso,
       value: exif.iso ? `ISO ${exif.iso}` : null,
-    },
-    {
-      icon: <CalendarDays className="h-4 w-4" />,
-      label: t.exif.date,
-      value: exif.takenAt
-        ? new Date(exif.takenAt).toLocaleDateString(t.exif.dateLocale, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-        : null,
     },
   ].filter((item) => item.value !== null);
 

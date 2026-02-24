@@ -45,7 +45,7 @@ export function Navbar() {
           hasBg ? "text-black dark:text-white" : "text-white"
         }`}
       >
-        MK Photography
+        MK Shots
       </Link>
 
       <div className="flex items-center gap-7">
@@ -54,6 +54,9 @@ export function Navbar() {
         </Link>
         <Link href="/gallery" className={linkClass(pathname.startsWith("/gallery"))}>
           {t.nav.gallery}
+        </Link>
+        <Link href="/stats" className={linkClass(pathname === "/stats")}>
+          {t.nav.stats}
         </Link>
         <Link href="/about" className={linkClass(hasBg && pathname === "/about")}>
           {t.nav.about}

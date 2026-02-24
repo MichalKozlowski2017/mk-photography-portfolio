@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "MK Photography",
+  title: "MK Shots",
   description: "Photography portfolio",
 };
 

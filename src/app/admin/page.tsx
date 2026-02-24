@@ -18,16 +18,21 @@ export default async function AdminDashboard() {
     <div className="mx-auto max-w-4xl px-4 py-16">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Panel admina</h1>
-        <form
-          action={async () => {
-            "use server";
-            await signOut({ redirectTo: "/admin/login" });
-          }}
-        >
-          <button type="submit" className="text-sm text-muted-foreground hover:text-foreground">
-            Wyloguj
-          </button>
-        </form>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
+            ← Strona główna
+          </Link>
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/admin/login" });
+            }}
+          >
+            <button type="submit" className="text-sm text-muted-foreground hover:text-foreground">
+              Wyloguj
+            </button>
+          </form>
+        </div>
       </div>
 
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
@@ -52,6 +57,12 @@ export default async function AdminDashboard() {
         >
           + Dodaj zdjęcie
         </Link>
+        <Link
+          href="/admin/photos/bulk"
+          className="rounded-lg border px-5 py-2.5 text-sm font-medium"
+        >
+          ↑ Masowy upload
+        </Link>
         <Link href="/admin/photos" className="rounded-lg border px-5 py-2.5 text-sm font-medium">
           Wszystkie zdjęcia
         </Link>
@@ -62,6 +73,12 @@ export default async function AdminDashboard() {
               {pendingCommentCount}
             </span>
           )}
+        </Link>
+        <Link
+          href="/admin/categories"
+          className="rounded-lg border px-5 py-2.5 text-sm font-medium"
+        >
+          Kategorie
         </Link>
       </div>
     </div>

@@ -27,13 +27,22 @@ export function PhotoCard({ photo }: PhotoCardProps) {
       />
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      {/* Date badge — always visible */}
+      {photo.exif?.takenAt && (
+        <div className="absolute right-2 top-2 bg-black/60 px-2 py-0.5 text-[10px] tracking-[0.1em] text-white/70 backdrop-blur-sm">
+          {new Date(photo.exif.takenAt).toLocaleDateString(t.exif.dateLocale, {
+            year: "numeric",
+            month: "short",
+          })}
+        </div>
+      )}
       {/* Title on hover */}
       {(photo.title || photo.category) && (
         <div className="absolute bottom-0 left-0 right-0 translate-y-2 p-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           {photo.title && <p className="text-sm font-medium text-white">{photo.title}</p>}
           {photo.category && (
             <p className="mt-0.5 text-[11px] tracking-[0.15em] uppercase text-white/60">
-              {photo.category.name}
+              {t.categories[photo.category.slug] ?? photo.category.name}
             </p>
           )}
         </div>

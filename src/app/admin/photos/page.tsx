@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
+import { DeletePhotoButton } from "@/components/admin/DeletePhotoButton";
 
 export default async function AdminPhotosPage() {
   const session = await auth();
@@ -17,12 +18,28 @@ export default async function AdminPhotosPage() {
     <div className="mx-auto max-w-5xl px-4 py-16">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Zdjęcia ({photos.length})</h1>
-        <Link
-          href="/admin/photos/new"
-          className="rounded-lg bg-foreground px-5 py-2.5 text-sm font-medium text-background"
-        >
-          + Dodaj zdjęcie
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
+            ← Strona główna
+          </Link>
+          <Link href="/admin" className="text-sm text-muted-foreground hover:text-foreground">
+            Panel
+          </Link>
+          <div className="flex gap-3">
+            <Link
+              href="/admin/photos/bulk"
+              className="rounded-lg border px-5 py-2.5 text-sm font-medium"
+            >
+              ↑ Masowy upload
+            </Link>
+            <Link
+              href="/admin/photos/new"
+              className="rounded-lg bg-foreground px-5 py-2.5 text-sm font-medium text-background"
+            >
+              + Dodaj zdjęcie
+            </Link>
+          </div>
+        </div>
       </div>
 
       {photos.length === 0 ? (
@@ -37,6 +54,7 @@ export default async function AdminPhotosPage() {
                 <th className="px-4 py-3 text-left font-medium">Kategoria</th>
                 <th className="px-4 py-3 text-left font-medium">Status</th>
                 <th className="px-4 py-3 text-left font-medium">Data</th>
+                <th className="px-4 py-3 text-left font-medium">Akcje</th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -72,6 +90,9 @@ export default async function AdminPhotosPage() {
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
                     {new Date(photo.createdAt).toLocaleDateString("pl-PL")}
+                  </td>
+                  <td className="px-4 py-3">
+                    <DeletePhotoButton photoId={photo.id} photoTitle={photo.title ?? photo.slug} />
                   </td>
                 </tr>
               ))}

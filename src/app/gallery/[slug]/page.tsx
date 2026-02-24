@@ -81,8 +81,22 @@ export default async function PhotoPage({ params }: Props) {
           )}
           {photo.category && (
             <span className="inline-block w-fit border border-white/20 px-3 py-1 text-[11px] tracking-[0.2em] uppercase text-white/50">
-              {photo.category.name}
+              {t.categories[photo.category.slug] ?? photo.category.name}
             </span>
+          )}
+          {photo.exif?.takenAt && (
+            <div className="flex items-center gap-2 text-sm text-white/50">
+              <span className="text-[11px] tracking-[0.2em] uppercase text-white/30">
+                {t.exif.date}
+              </span>
+              <span>
+                {new Date(photo.exif.takenAt).toLocaleDateString(t.exif.dateLocale, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </div>
           )}
           <ExifPanel exif={photo.exif as PhotoWithExif["exif"]} />
 
