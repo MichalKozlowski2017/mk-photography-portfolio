@@ -1,6 +1,6 @@
 "use client";
 
-import { formatAperture, formatFocalLength } from "@/lib/utils/photo";
+import { formatAperture, formatFocalLength, normalizeCameraName } from "@/lib/utils/photo";
 import type { PhotoWithExif } from "@/types";
 import { Camera, Aperture, Timer, Zap, Focus } from "lucide-react";
 import { useLang } from "@/i18n/LangContext";
@@ -17,7 +17,7 @@ export function ExifPanel({ exif }: ExifPanelProps) {
     {
       icon: <Camera className="h-4 w-4" />,
       label: t.exif.camera,
-      value: [exif.cameraMake, exif.cameraModel].filter(Boolean).join(" ") || null,
+      value: normalizeCameraName(exif.cameraMake, exif.cameraModel),
     },
     {
       icon: <Focus className="h-4 w-4" />,

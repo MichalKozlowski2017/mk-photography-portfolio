@@ -4,22 +4,10 @@ import { prisma } from "@/lib/prisma";
 import { PhotoGrid } from "@/components/gallery/PhotoGrid";
 import { SortSelect, type SortOption, DEFAULT_SORT } from "@/components/gallery/SortSelect";
 import { getT } from "@/i18n/server";
-import type { PhotoWithExif } from "@/types";
+import { fetchGalleryPhotos } from "@/app/actions/photos";
 
 interface Props {
   searchParams: Promise<{ category?: string; sort?: string }>;
-}
-
-function getOrderBy(sort: SortOption) {
-  switch (sort) {
-    case "dateAsc":
-      return [{ exif: { takenAt: "asc" } }, { createdAt: "asc" }] as const;
-    case "uploadDesc":
-      return [{ createdAt: "desc" }] as const;
-    case "dateDesc":
-    default:
-      return [{ exif: { takenAt: "desc" } }, { createdAt: "desc" }] as const;
-  }
 }
 
 export default async function GalleryPage({ searchParams }: Props) {
@@ -29,37 +17,14 @@ export default async function GalleryPage({ searchParams }: Props) {
       ? (sortParam as SortOption)
       : DEFAULT_SORT;
 
-  const where = {
-    published: true,
-    ...(category ? { category: { slug: category } } : {}),
-  };
-
-  const [photos, categories, t, ratingAggregates] = await Promise.all([
-    prisma.photo.findMany({
-      where,
-      orderBy: sort === "ratingDesc" ? [{ createdAt: "desc" }] : getOrderBy(sort),
-      include: { exif: true, category: true },
-    }),
+  const [{ photos: initialPhotos, hasMore: initialHasMore }, categories, t] = await Promise.all([
+    fetchGalleryPhotos({ page: 0, category, sort }),
     prisma.category.findMany({
       where: { photos: { some: { published: true } } },
       orderBy: { name: "asc" },
     }),
     getT(),
-    sort === "ratingDesc"
-      ? prisma.rating.groupBy({
-          by: ["photoId"],
-          _avg: { value: true },
-        })
-      : Promise.resolve(null),
   ]);
-
-  let sortedPhotos = photos as PhotoWithExif[];
-  if (sort === "ratingDesc" && ratingAggregates) {
-    const avgMap = new Map(ratingAggregates.map((r) => [r.photoId, r._avg.value ?? 0]));
-    sortedPhotos = [...sortedPhotos].sort(
-      (a, b) => (avgMap.get(b.id) ?? 0) - (avgMap.get(a.id) ?? 0),
-    );
-  }
 
   return (
     <main className="mx-auto max-w-6xl px-4 pb-24 pt-32">
@@ -101,7 +66,12 @@ export default async function GalleryPage({ searchParams }: Props) {
         </Suspense>
       </div>
 
-      <PhotoGrid photos={sortedPhotos} />
+      <PhotoGrid
+        initialPhotos={initialPhotos}
+        initialHasMore={initialHasMore}
+        category={category}
+        sort={sort}
+      />
     </main>
   );
 }

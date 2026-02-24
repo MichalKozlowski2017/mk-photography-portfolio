@@ -49,8 +49,8 @@ export async function extractExif(source: Buffer | string): Promise<ParsedExif> 
     if (!raw) return {};
 
     return {
-      cameraMake: raw.Make ?? undefined,
-      cameraModel: raw.Model ?? undefined,
+      cameraMake: raw.Make?.trim() ?? undefined,
+      cameraModel: raw.Model?.trim() ?? undefined,
       lens: raw.LensModel ?? undefined,
       focalLength: raw.FocalLength ?? undefined,
       aperture: raw.FNumber ?? undefined,

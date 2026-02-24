@@ -115,21 +115,19 @@ export default async function PhotoPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Comments — hidden, feature preserved */}
-      <div className="hidden">
-        <section className="mx-auto mt-16 max-w-2xl border-t border-white/10 pt-12">
-          <h2 className="mb-8 text-sm tracking-[0.25em] uppercase text-white/40">
-            {t.comments.title}
-            {photo.comments.length > 0 && (
-              <span className="ml-2 text-white/20">({photo.comments.length})</span>
-            )}
-          </h2>
-          <div className="mb-10">
-            <CommentList comments={photo.comments} />
-          </div>
-          <CommentForm photoId={photo.id} />
-        </section>
-      </div>
+      {/* Comments */}
+      <section className="mx-auto mt-16 max-w-2xl border-t border-white/10 pt-12">
+        <h2 className="mb-8 text-sm tracking-[0.25em] uppercase text-white/40">
+          {t.comments.title}
+          {photo.comments.length > 0 && (
+            <span className="ml-2 text-white/20">({photo.comments.length})</span>
+          )}
+        </h2>
+        <div className="mb-10">
+          <CommentList comments={photo.comments} />
+        </div>
+        <CommentForm photoId={photo.id} />
+      </section>
     </main>
   );
 }

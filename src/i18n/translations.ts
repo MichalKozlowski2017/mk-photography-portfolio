@@ -68,6 +68,8 @@ const t = {
     },
     photoGrid: {
       empty: "No photos to display.",
+      loadingMore: "Loading more photos…",
+      noMore: "You've seen them all.",
     },
     exif: {
       title: "EXIF Data",
@@ -161,7 +163,7 @@ const t = {
     },
     hero: {
       subtitle: "Portfolio Fotograficzne",
-      tagline: "Uwieczniam Chwile",
+      tagline: "Z Pasji do Fotografii",
       cta: "Zobacz Portfolio",
       slideLabel: (n: number) => `Zdjęcie ${n}`,
     },
@@ -201,6 +203,8 @@ const t = {
     },
     photoGrid: {
       empty: "Brak zdjęć do wyświetlenia.",
+      loadingMore: "Ładowanie kolejnych zdjęć…",
+      noMore: "To już wszystkie zdjęcia.",
     },
     exif: {
       title: "Dane EXIF",
@@ -214,7 +218,7 @@ const t = {
       dateLocale: "pl-PL",
     },
     footer: {
-      tagline: "Uwieczniam Chwile",
+      tagline: "Z Pasji do Fotografii",
       rights: "Wszelkie prawa zastrzeżone.",
     },
     about: {

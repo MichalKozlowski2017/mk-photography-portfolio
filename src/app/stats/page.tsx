@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { StatsCharts, type StatsData, type CameraStats } from "@/components/stats/StatsCharts";
 import { getT } from "@/i18n/server";
+import { normalizeCameraModel } from "@/lib/utils/photo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -174,7 +175,19 @@ export default async function StatsPage() {
       `,
   ]);
 
-  const cameras = cameraRows.map((r) => r.cameraModel);
+  // Normalize raw cameraModel strings to friendly display names
+  const norm = (m: string | null) => normalizeCameraModel(m) ?? m ?? "";
+  const normLensRows = lensRows.map((r) => ({ ...r, cameraModel: norm(r.cameraModel) }));
+  const normFocalRows = focalRows.map((r) => ({ ...r, cameraModel: norm(r.cameraModel) }));
+  const normApertureRows = apertureRows.map((r) => ({ ...r, cameraModel: norm(r.cameraModel) }));
+  const normIsoRows = isoRows.map((r) => ({ ...r, cameraModel: norm(r.cameraModel) }));
+  const normCategoryRows = categoryRows.map((r) => ({
+    ...r,
+    cameraModel: r.cameraModel ? norm(r.cameraModel) : null,
+  }));
+  const normCameraRows = cameraRows.map((r) => ({ ...r, cameraModel: norm(r.cameraModel) }));
+
+  const cameras = normCameraRows.map((r) => r.cameraModel);
   const categoriesWithPhotos = categories.filter((c) => c._count.photos > 0).length;
 
   const firstYear = timelineRows[0]?.month?.split("-")[0];
@@ -187,7 +200,14 @@ export default async function StatsPage() {
     yearsActive,
     cameras,
     timeline: timelineRows.map((r) => ({ label: formatMonth(r.month), count: r.count })),
-    byCamera: buildByCamera(lensRows, focalRows, apertureRows, isoRows, categoryRows, cameras),
+    byCamera: buildByCamera(
+      normLensRows,
+      normFocalRows,
+      normApertureRows,
+      normIsoRows,
+      normCategoryRows,
+      cameras,
+    ),
   };
 
   return (

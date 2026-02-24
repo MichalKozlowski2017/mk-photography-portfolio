@@ -13,9 +13,6 @@ import {
   AreaChart,
   Area,
   CartesianGrid,
-  PieChart,
-  Pie,
-  Legend,
   LabelList,
 } from "recharts";
 import type { Translations } from "@/i18n/translations";
@@ -385,44 +382,41 @@ export function StatsCharts({
           )}
         </ChartCard>
 
-        {/* ISO donut */}
+        {/* ISO — horizontal bar */}
         <ChartCard title={t.isoRanges}>
           {filtered.isoRanges.length === 0 ? (
             <p className="py-16 text-center text-sm text-zinc-400 dark:text-white/25">{t.noData}</p>
           ) : (
-            <ResponsiveContainer width="100%" height={240}>
-              <PieChart>
-                <Pie
-                  data={filtered.isoRanges}
-                  dataKey="count"
-                  nameKey="label"
-                  cx="50%"
-                  cy="42%"
-                  innerRadius={54}
-                  outerRadius={84}
-                  paddingAngle={3}
-                  stroke="none"
-                >
+            <ResponsiveContainer
+              width="100%"
+              height={Math.max(180, filtered.isoRanges.length * 44)}
+            >
+              <BarChart
+                data={filtered.isoRanges}
+                layout="vertical"
+                margin={{ top: 0, right: 45, left: 0, bottom: 0 }}
+              >
+                <XAxis type="number" hide />
+                <YAxis
+                  type="category"
+                  dataKey="label"
+                  tick={{ fill: axisTickSm, fontSize: 11 }}
+                  width={80}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: cursor }} />
+                <Bar dataKey="count" radius={[0, 4, 4, 0]} maxBarSize={22}>
+                  <LabelList
+                    dataKey="count"
+                    position="right"
+                    style={{ fill: labelRight, fontSize: 11 }}
+                  />
                   {filtered.isoRanges.map((_, i) => (
                     <Cell key={i} fill={isoShades[i] ?? (isDark ? "#27272a" : "#e4e4e7")} />
                   ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-                <Legend
-                  iconType="circle"
-                  iconSize={7}
-                  formatter={(v) => (
-                    <span
-                      style={{
-                        color: isDark ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.5)",
-                        fontSize: 11,
-                      }}
-                    >
-                      {v}
-                    </span>
-                  )}
-                />
-              </PieChart>
+                </Bar>
+              </BarChart>
             </ResponsiveContainer>
           )}
         </ChartCard>
